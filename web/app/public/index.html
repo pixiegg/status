@@ -15,17 +15,11 @@
         defaultFilterBy: "{{ .UI.DefaultFilterBy }}",
         loginSubtitle: "{{ .UI.LoginSubtitle }}",
       };
-      {
-        {
-          -range.UI.Buttons;
-        }
-      }
+      // prettier-ignore
+      {{- range .UI.Buttons }}
       window.config.buttons.push({ name: "{{ .Name }}", link: "{{ .Link }}" });
-      {
-        {
-          -end;
-        }
-      }
+      // prettier-ignore
+      {{- end }}
       // Initialize theme immediately to prevent flash
       (function () {
         const themeFromCookie =
