@@ -33,6 +33,9 @@ ui:
 storage:
   type: postgres
   path: "${DATABASE_URL}"
+  caching: true
+  maximum-number-of-results: 44000
+  maximum-number-of-events: 500
 
 endpoints:
   - name: "Pagamentos via PIX"
