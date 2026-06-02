@@ -68,8 +68,6 @@ const emit = defineEmits(["refreshData"]);
 
 // Constants
 const REFRESH_INTERVALS = [
-  { value: "10", label: "10s" },
-  { value: "30", label: "30s" },
   { value: "60", label: "1m" },
   { value: "120", label: "2m" },
   { value: "300", label: "5m" },
