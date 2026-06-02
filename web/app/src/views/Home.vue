@@ -35,15 +35,6 @@
         </div>
         <!-- Announcement Banner (Active Announcements) -->
         <AnnouncementBanner :announcements="activeAnnouncements" />
-        <!-- Search bar -->
-        <SearchBar
-          @search="handleSearch"
-          @update:showOnlyFailing="showOnlyFailing = $event"
-          @update:showRecentFailures="showRecentFailures = $event"
-          @update:groupByGroup="groupByGroup = $event"
-          @update:sortBy="sortBy = $event"
-          @initializeCollapsedGroups="initializeCollapsedGroups"
-        />
       </div>
 
       <div v-if="loading" class="flex items-center justify-center py-20">
@@ -259,7 +250,6 @@ import {
 import { Button } from "@/components/ui/button";
 import EndpointCard from "@/components/EndpointCard.vue";
 import SuiteCard from "@/components/SuiteCard.vue";
-import SearchBar from "@/components/SearchBar.vue";
 import Settings from "@/components/Settings.vue";
 import Loading from "@/components/Loading.vue";
 import AnnouncementBanner from "@/components/AnnouncementBanner.vue";
@@ -579,11 +569,6 @@ const refreshData = () => {
   fetchData();
 };
 
-const handleSearch = (query) => {
-  searchQuery.value = query;
-  currentPage.value = 1;
-};
-
 const goToPage = (page) => {
   currentPage.value = page;
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -626,21 +611,6 @@ const toggleGroupCollapse = (groupName) => {
   const uncollapsed = Array.from(uncollapsedGroups.value);
   localStorage.setItem("gatus:uncollapsed-groups", JSON.stringify(uncollapsed));
   localStorage.removeItem("gatus:collapsed-groups"); // Remove old key if it exists
-};
-
-const initializeCollapsedGroups = () => {
-  // Get saved uncollapsed groups from localStorage
-  try {
-    const saved = localStorage.getItem("gatus:uncollapsed-groups");
-    if (saved) {
-      uncollapsedGroups.value = new Set(JSON.parse(saved));
-    }
-    // If no saved state, uncollapsedGroups stays empty (all collapsed by default)
-  } catch (e) {
-    console.warn("Failed to parse saved uncollapsed groups:", e);
-    localStorage.removeItem("gatus:uncollapsed-groups");
-    // On error, uncollapsedGroups stays empty (all collapsed by default)
-  }
 };
 
 const dashboardHeading = computed(() => {
