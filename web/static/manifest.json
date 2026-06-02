@@ -1,13 +1,13 @@
 {
-  "id": "gatus",
-  "name": "Gatus",
-  "short_name": "Gatus",
-  "description": "Gatus is an advanced automated status page that lets you monitor your applications and configure alerts to notify you if there's an issue",
-  "lang": "en",
+  "id": "pixie",
+  "name": "Pixie • Status do sistema",
+  "short_name": "Pixie",
+  "description": "Confira se o Pixie está funcionando como esperado.",
+  "lang": "pt-br",
   "scope": "/",
   "start_url": "/",
-  "theme_color": "#f7f9fb",
-  "background_color": "#f7f9fb",
+  "theme_color": "#00B4CC",
+  "background_color": "#00B4CC",
   "display": "standalone",
   "icons": [
     {

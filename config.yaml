@@ -1,53 +1,78 @@
+web:
+  port: ${PORT}
+
+ui:
+  title: "Pixie • Status do sistema"
+  description: "Confira se o Pixie está funcionando como esperado."
+  dashboard-heading: "Status do sistema"
+  dashboard-subheading: "Confira se o Pixie está funcionando como esperado."
+  header: "Pixie"
+  dark-mode: false
+
+.default-public-endpoint: &public_settings
+  interval: 1m
+  ui:
+    hide-url: true
+    hide-hostname: true
+    hide-port: true
+    hide-conditions: true
+    hide-errors: true
+
+storage:
+  type: postgres
+  path: "${DATABASE_URL}"
+
 endpoints:
-  - name: front-end
-    group: core
-    url: "https://twin.sh/health"
-    interval: 5m
+  - name: "Health Check - Pix"
+    group: "Serviços Internos"
+    url: "https://api-v2-684289935571.us-central1.run.app/internal/health/pix"
+    method: GET
+    headers:
+      x-token: "CbJejNf6Fg3+IDgYUOZUZZDm/bFuOE280NZ+5Rect2Q="
+    <<: *public_settings
     conditions:
-      - "[STATUS] == 200"
-      - "[BODY].status == UP"
-      - "[RESPONSE_TIME] < 150"
+      - "[STATUS] < 400"
 
-  - name: back-end
-    group: core
-    url: "https://example.org/"
-    interval: 5m
+  - name: "Health Check - Internacional"
+    group: "Serviços Internos"
+    url: "https://api-v2-684289935571.us-central1.run.app/internal/health/intl"
+    method: GET
+    headers:
+      x-token: "CbJejNf6Fg3+IDgYUOZUZZDm/bFuOE280NZ+5Rect2Q="
+    <<: *public_settings
     conditions:
-      - "[STATUS] == 200"
-      - "[CERTIFICATE_EXPIRATION] > 48h"
+      - "[STATUS] < 400"
 
-  - name: monitoring
-    group: internal
-    url: "https://example.org/"
-    interval: 5m
+  - name: "Health Check - AI Voices"
+    group: "Serviços Internos"
+    url: "https://api-v2-684289935571.us-central1.run.app/internal/health/ai-voices"
+    method: GET
+    headers:
+      x-token: "CbJejNf6Fg3+IDgYUOZUZZDm/bFuOE280NZ+5Rect2Q="
+    <<: *public_settings
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] < 400"
 
-  - name: nas
-    group: internal
-    url: "https://example.org/"
-    interval: 5m
+  - name: "API"
+    group: "Plataforma Pixie"
+    url: "https://api.pixie.gg"
+    method: GET
+    <<: *public_settings
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] < 400"
 
-  - name: example-dns-query
-    url: "8.8.8.8" # Address of the DNS server to use
-    interval: 5m
-    dns:
-      query-name: "example.com"
-      query-type: "A"
+  - name: "Landing"
+    group: "Plataforma Pixie"
+    url: "https://pixie.gg"
+    method: GET
+    <<: *public_settings
     conditions:
-      - "[BODY] == pat(*.*.*.*)"  # Matches any IPv4 address
-      - "[DNS_RCODE] == NOERROR"
+      - "[STATUS] < 400"
 
-  - name: icmp-ping
-    url: "icmp://example.org"
-    interval: 1m
+  - name: "Dashboard"
+    group: "Plataforma Pixie"
+    url: "https://dashboard.pixie.gg"
+    method: GET
+    <<: *public_settings
     conditions:
-      - "[CONNECTED] == true"
-
-  - name: check-domain-expiration
-    url: "https://example.org/"
-    interval: 1h
-    conditions:
-      - "[DOMAIN_EXPIRATION] > 720h"
+      - "[STATUS] < 400"
