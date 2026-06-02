@@ -8,13 +8,13 @@
       class="flex items-center gap-1"
     >
       <ChevronLeft class="h-4 w-4" />
-      Previous
+      Anterior
     </Button>
-    
+
     <span class="text-sm text-muted-foreground">
-      Page {{ currentPage }} of {{ maxPages }}
+      Página {{ currentPage }} de {{ maxPages }}
     </span>
-    
+
     <Button
       variant="outline"
       size="sm"
@@ -22,51 +22,55 @@
       @click="nextPage"
       class="flex items-center gap-1"
     >
-      Next
+      Próxima
       <ChevronRight class="h-4 w-4" />
     </Button>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
-import { Button } from '@/components/ui/button'
+import { ref, computed } from "vue";
+import { ChevronLeft, ChevronRight } from "lucide-vue-next";
+import { Button } from "@/components/ui/button";
 
 const props = defineProps({
   numberOfResultsPerPage: Number,
   currentPageProp: {
     type: Number,
-    default: 1
-  }
-})
+    default: 1,
+  },
+});
 
-const emit = defineEmits(['page'])
+const emit = defineEmits(["page"]);
 
-const currentPage = ref(props.currentPageProp)
+const currentPage = ref(props.currentPageProp);
 
 const maxPages = computed(() => {
   // Use maximumNumberOfResults from config if available, otherwise default to 100
-  let maxResults = 100 // Default value
+  let maxResults = 100; // Default value
   // Check if window.config exists and has maximumNumberOfResults
-  if (typeof window !== 'undefined' && window.config && window.config.maximumNumberOfResults) {
-    const parsed = parseInt(window.config.maximumNumberOfResults)
+  if (
+    typeof window !== "undefined" &&
+    window.config &&
+    window.config.maximumNumberOfResults
+  ) {
+    const parsed = parseInt(window.config.maximumNumberOfResults);
     if (!isNaN(parsed)) {
-      maxResults = parsed
+      maxResults = parsed;
     }
   }
-  return Math.ceil(maxResults / props.numberOfResultsPerPage)
-})
+  return Math.ceil(maxResults / props.numberOfResultsPerPage);
+});
 
 const nextPage = () => {
   // "Next" should show newer data (lower page numbers)
-  currentPage.value--
-  emit('page', currentPage.value)
-}
+  currentPage.value--;
+  emit("page", currentPage.value);
+};
 
 const previousPage = () => {
   // "Previous" should show older data (higher page numbers)
-  currentPage.value++
-  emit('page', currentPage.value)
-}
+  currentPage.value++;
+  emit("page", currentPage.value);
+};
 </script>

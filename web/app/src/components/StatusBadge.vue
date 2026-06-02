@@ -6,53 +6,54 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { Badge } from '@/components/ui/badge'
+import { computed } from "vue";
+import { Badge } from "@/components/ui/badge";
 
 const props = defineProps({
   status: {
     type: String,
     required: true,
-    validator: (value) => ['healthy', 'unhealthy', 'degraded', 'unknown'].includes(value)
-  }
-})
+    validator: (value) =>
+      ["healthy", "unhealthy", "degraded", "unknown"].includes(value),
+  },
+});
 
 const variant = computed(() => {
   switch (props.status) {
-    case 'healthy':
-      return 'success'
-    case 'unhealthy':
-      return 'destructive'
-    case 'degraded':
-      return 'warning'
+    case "healthy":
+      return "success";
+    case "unhealthy":
+      return "destructive";
+    case "degraded":
+      return "warning";
     default:
-      return 'secondary'
+      return "secondary";
   }
-})
+});
 
 const label = computed(() => {
   switch (props.status) {
-    case 'healthy':
-      return 'Healthy'
-    case 'unhealthy':
-      return 'Unhealthy'
-    case 'degraded':
-      return 'Degraded'
+    case "healthy":
+      return "Saudável";
+    case "unhealthy":
+      return "Não Saudável";
+    case "degraded":
+      return "Degradado";
     default:
-      return 'Unknown'
+      return "Desconhecido";
   }
-})
+});
 
 const dotClass = computed(() => {
   switch (props.status) {
-    case 'healthy':
-      return 'bg-green-400'
-    case 'unhealthy':
-      return 'bg-red-400'
-    case 'degraded':
-      return 'bg-yellow-400'
+    case "healthy":
+      return "bg-green-400";
+    case "unhealthy":
+      return "bg-red-400";
+    case "degraded":
+      return "bg-yellow-400";
     default:
-      return 'bg-gray-400'
+      return "bg-gray-400";
   }
-})
+});
 </script>
