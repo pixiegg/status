@@ -116,24 +116,6 @@
           :announcements="announcements"
         />
       </main>
-
-      <!-- Footer -->
-      <footer class="border-t mt-auto">
-        <div class="container mx-auto px-4 py-6 max-w-7xl">
-          <div class="flex flex-col items-center gap-4">
-            <div class="text-sm text-muted-foreground text-center">
-              Desenvolvido por
-              <a
-                href="https://gatus.io"
-                target="_blank"
-                class="font-medium text-emerald-800 hover:text-emerald-600"
-                >Gatus</a
-              >
-            </div>
-            <Social />
-          </div>
-        </div>
-      </footer>
     </div>
 
     <!-- OIDC Login Screen -->
@@ -202,7 +184,6 @@ import { useRoute } from "vue-router";
 import { Menu, X, LogIn } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import Social from "./components/Social.vue";
 import Tooltip from "./components/Tooltip.vue";
 import Loading from "./components/Loading.vue";
 

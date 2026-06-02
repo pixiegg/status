@@ -13,14 +13,6 @@ ui:
       border: 0;
     }
 
-    footer {
-      border: 0;
-    }
-
-    div#social {
-      display: none;
-    }
-
 .default-public-endpoint: &public_settings
   interval: 1m
   ui:
