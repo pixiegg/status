@@ -13,8 +13,8 @@ ui:
       border: 0;
     }
 
-    a {
-      color: #00B4CC !important;
+    footer {
+      border: 0;
     }
 
     div#social {
