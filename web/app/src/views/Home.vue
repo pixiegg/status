@@ -35,6 +35,12 @@
         </div>
         <!-- Announcement Banner (Active Announcements) -->
         <AnnouncementBanner :announcements="activeAnnouncements" />
+
+        <OverallStatus
+          v-if="!loading && endpointStatuses.length > 0"
+          :endpoints="endpointStatuses"
+          class="mt-6"
+        />
       </div>
 
       <div v-if="loading" class="flex items-center justify-center py-20">
@@ -254,6 +260,7 @@ import Settings from "@/components/Settings.vue";
 import Loading from "@/components/Loading.vue";
 import AnnouncementBanner from "@/components/AnnouncementBanner.vue";
 import PastAnnouncements from "@/components/PastAnnouncements.vue";
+import OverallStatus from "@/components/OverallStatus.vue";
 
 const props = defineProps({
   announcements: {
