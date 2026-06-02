@@ -172,10 +172,10 @@
                       period === "30d"
                         ? "Últimos 30 dias"
                         : period === "7d"
-                          ? "Últimos 7 dias"
-                          : period === "24h"
-                            ? "Últimas 24 horas"
-                            : "Última hora"
+                        ? "Últimos 7 dias"
+                        : period === "24h"
+                        ? "Últimas 24 horas"
+                        : "Última hora"
                     }}
                   </CardTitle>
                 </CardHeader>
@@ -462,14 +462,6 @@ const showTooltip = (result, event, action = "hover") => {
 
 const prettifyTimestamp = (timestamp) => {
   return new Date(timestamp).toLocaleString();
-};
-
-const generateHealthBadgeImageURL = () => {
-  return `/api/v1/endpoints/${endpointStatus.value.key}/health/badge.svg`;
-};
-
-const generateUptimeBadgeImageURL = (duration) => {
-  return `/api/v1/endpoints/${endpointStatus.value.key}/uptimes/${duration}/badge.svg`;
 };
 
 const generateResponseTimeBadgeImageURL = (duration) => {
