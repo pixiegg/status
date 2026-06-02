@@ -31,17 +31,8 @@
                 ]"
               >
                 <div class="w-12 h-12 flex items-center justify-center">
-                  <img
-                    v-if="logo"
-                    :src="logo"
-                    alt="Gatus"
-                    class="w-full h-full object-contain"
-                  />
-                  <img
-                    v-else
-                    src="./assets/logo.svg"
-                    alt="Gatus"
-                    class="w-full h-full object-contain"
+                  <AppLogo
+                    class="w-full h-full object-contain text-black dark:text-white"
                   />
                 </div>
                 <div>
@@ -126,17 +117,9 @@
     >
       <Card class="w-full max-w-md">
         <CardHeader class="text-center">
-          <div v-if="logo" class="flex items-center justify-center gap-4 mb-4">
-            <img :src="logo" alt="" class="w-20 h-20 object-contain" />
-            <div class="w-px h-12 bg-border"></div>
-            <img src="./assets/logo.svg" alt="Gatus" class="w-20 h-20" />
+          <div class="flex items-center justify-center gap-4 mb-4">
+            <AppLogo class="w-20 h-20 text-black dark:text-white" />
           </div>
-          <img
-            v-else
-            src="./assets/logo.svg"
-            alt="Gatus"
-            class="w-20 h-20 mx-auto mb-4"
-          />
           <CardTitle class="text-3xl">{{ header }}</CardTitle>
           <p class="text-muted-foreground mt-2">{{ loginSubtitle }}</p>
         </CardHeader>
@@ -186,6 +169,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Tooltip from "./components/Tooltip.vue";
 import Loading from "./components/Loading.vue";
+import AppLogo from "./components/AppLogo.vue";
 
 const route = useRoute();
 
@@ -198,15 +182,6 @@ const mobileMenuOpen = ref(false);
 const isOidcLoading = ref(false);
 const tooltipIsPersistent = ref(false);
 let configInterval = null;
-
-// Computed properties
-const logo = computed(() => {
-  return window.config &&
-    window.config.logo &&
-    window.config.logo !== "{{ .UI.Logo }}"
-    ? window.config.logo
-    : "";
-});
 
 const header = computed(() => {
   return window.config &&
