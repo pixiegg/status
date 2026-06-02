@@ -1,8 +1,8 @@
 <template>
   <Card class="overflow-hidden">
-    <CardContent class="p-6 flex items-center gap-4">
+    <CardContent class="p-4 sm:p-5 flex items-center gap-3">
       <div
-        class="relative flex h-6 w-6 items-center justify-center flex-shrink-0"
+        class="relative flex h-5 w-5 items-center justify-center flex-shrink-0"
       >
         <span
           :class="[
@@ -11,10 +11,10 @@
           ]"
         ></span>
         <span
-          :class="['relative inline-flex rounded-full h-4 w-4', dotColorClass]"
+          :class="['relative inline-flex rounded-full h-3 w-3', dotColorClass]"
         ></span>
       </div>
-      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+      <h2 class="text-lg sm:text-xl font-medium tracking-tight text-foreground">
         {{ statusText }}
       </h2>
     </CardContent>
