@@ -1,6 +1,16 @@
 web:
   port: ${PORT}
 
+alerting:
+  discord:
+    webhook-url: "https://discord.com/api/webhooks/1511420350972297386/LaJi6dOQS0Qlez0DmgqA_ZSL_6bX-sMgYm1FCV3BOTVOCl2KcdpLR1P8XlsfeVRQ2Ytc"
+    title: "🚨 ALARME"
+    default-alert:
+      enabled: true
+      failure-threshold: 3
+      success-threshold: 2
+      send-on-resolved: true
+
 ui:
   title: "Pixie • Status do sistema"
   description: "Confira se o Pixie está funcionando como esperado."
@@ -21,6 +31,8 @@ ui:
     hide-port: true
     hide-conditions: true
     hide-errors: true
+  alerts:
+    - type: discord
 
 storage:
   type: postgres
