@@ -231,6 +231,7 @@ import ResponseTimeChart from "@/components/ResponseTimeChart.vue";
 import {
   generatePrettyTimeAgo,
   generatePrettyTimeDifference,
+  prettifyTimestamp,
 } from "@/utils/time";
 
 const router = useRouter();
@@ -431,10 +432,6 @@ const changePage = (page) => {
 
 const showTooltip = (result, event, action = "hover") => {
   emit("showTooltip", result, event, action);
-};
-
-const prettifyTimestamp = (timestamp) => {
-  return new Date(timestamp).toLocaleString();
 };
 
 onMounted(() => {

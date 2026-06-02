@@ -201,7 +201,7 @@ import SequentialFlowDiagram from "@/components/SequentialFlowDiagram.vue";
 import StepDetailsModal from "@/components/StepDetailsModal.vue";
 import Settings from "@/components/Settings.vue";
 import Loading from "@/components/Loading.vue";
-import { generatePrettyTimeAgo } from "@/utils/time";
+import { generatePrettyTimeAgo, prettifyTimestamp } from "@/utils/time";
 import { formatDuration } from "@/utils/format";
 
 const router = useRouter();
@@ -304,8 +304,7 @@ const formatRelativeTime = (timestamp) => {
 };
 
 const formatTimestamp = (timestamp) => {
-  const date = new Date(timestamp);
-  return date.toLocaleString();
+  return prettifyTimestamp(timestamp);
 };
 
 const calculateSuccessRate = (result) => {

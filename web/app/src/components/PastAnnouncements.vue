@@ -206,31 +206,26 @@ const getTypeClasses = (type) => {
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  let YYYY = date.getFullYear();
+  let MM = String(date.getMonth() + 1).padStart(2, "0");
+  let DD = String(date.getDate()).padStart(2, "0");
+  return `${DD}/${MM}/${YYYY}`;
 };
 
 const formatTime = (timestamp) => {
-  return new Date(timestamp).toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
+  let date = new Date(timestamp);
+  let hh = String(date.getHours()).padStart(2, "0");
+  let mm = String(date.getMinutes()).padStart(2, "0");
+  return `${hh}:${mm}`;
 };
 
 const formatFullTimestamp = (timestamp) => {
-  return new Date(timestamp).toLocaleString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    timeZoneName: "short",
-  });
+  let date = new Date(timestamp);
+  let YYYY = date.getFullYear();
+  let MM = String(date.getMonth() + 1).padStart(2, "0");
+  let DD = String(date.getDate()).padStart(2, "0");
+  let hh = String(date.getHours()).padStart(2, "0");
+  let mm = String(date.getMinutes()).padStart(2, "0");
+  return `${DD}/${MM}/${YYYY} ${hh}:${mm}`;
 };
 </script>

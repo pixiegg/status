@@ -67,18 +67,12 @@ export const generatePrettyTimeDifference = (start, end) => {
   }
 };
 
-/**
- * Formats a timestamp into YYYY-MM-DD HH:mm:ss format
- * @param {string|Date} timestamp - The timestamp to format
- * @returns {string} Formatted timestamp
- */
 export const prettifyTimestamp = (timestamp) => {
   let date = new Date(timestamp);
   let YYYY = date.getFullYear();
-  let MM = (date.getMonth() + 1 < 10 ? "0" : "") + "" + (date.getMonth() + 1);
-  let DD = (date.getDate() < 10 ? "0" : "") + "" + date.getDate();
-  let hh = (date.getHours() < 10 ? "0" : "") + "" + date.getHours();
-  let mm = (date.getMinutes() < 10 ? "0" : "") + "" + date.getMinutes();
-  let ss = (date.getSeconds() < 10 ? "0" : "") + "" + date.getSeconds();
-  return YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss;
+  let MM = String(date.getMonth() + 1).padStart(2, "0");
+  let DD = String(date.getDate()).padStart(2, "0");
+  let hh = String(date.getHours()).padStart(2, "0");
+  let mm = String(date.getMinutes()).padStart(2, "0");
+  return `${DD}/${MM}/${YYYY} ${hh}:${mm}`;
 };

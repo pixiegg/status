@@ -33,7 +33,7 @@ import {
 } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 import "chartjs-adapter-date-fns";
-import { generatePrettyTimeDifference } from "@/utils/time";
+import { generatePrettyTimeDifference, prettifyTimestamp } from "@/utils/time";
 import Loading from "./Loading.vue";
 
 ChartJS.register(
@@ -200,7 +200,7 @@ const chartOptions = computed(() => {
           title: (tooltipItems) => {
             if (tooltipItems.length > 0) {
               const date = new Date(tooltipItems[0].parsed.x);
-              return date.toLocaleString();
+              return prettifyTimestamp(date);
             }
             return "";
           },
@@ -249,7 +249,7 @@ const chartOptions = computed(() => {
               content: [
                 event.isOngoing ? `Status: EM ANDAMENTO` : `Status: RESOLVIDO`,
                 `Indisponível por ${event.duration}`,
-                `Iniciado em ${new Date(event.timestamp).toLocaleString()}`,
+                `Iniciado em ${prettifyTimestamp(event.timestamp)}`,
               ],
               backgroundColor: getEventColor(),
               color: "#ffffff",
@@ -275,8 +275,8 @@ const chartOptions = computed(() => {
               ? "day"
               : "day",
           displayFormats: {
-            hour: "MMM d, ha",
-            day: "MMM d",
+            hour: "dd/MM HH:mm",
+            day: "dd/MM HH:mm",
           },
         },
         grid: {
