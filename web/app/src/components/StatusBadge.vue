@@ -34,11 +34,11 @@ const variant = computed(() => {
 const label = computed(() => {
   switch (props.status) {
     case "healthy":
-      return "Saudável";
+      return "Operando";
     case "unhealthy":
-      return "Não Saudável";
+      return "Indisponível";
     case "degraded":
-      return "Degradado";
+      return "Lento";
     default:
       return "Desconhecido";
   }

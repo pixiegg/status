@@ -35,7 +35,7 @@
                 <div class="text-2xl font-bold">
                   {{
                     currentHealthStatus === "healthy"
-                      ? "Operacional"
+                      ? "Operando"
                       : "Problemas Detectados"
                   }}
                 </div>
@@ -45,7 +45,7 @@
             <Card>
               <CardHeader class="pb-2">
                 <CardTitle class="text-sm font-medium text-muted-foreground"
-                  >Tempo Médio de Resposta</CardTitle
+                  >Tempo médio de resposta</CardTitle
                 >
               </CardHeader>
               <CardContent>
@@ -58,7 +58,7 @@
             <Card>
               <CardHeader class="pb-2">
                 <CardTitle class="text-sm font-medium text-muted-foreground"
-                  >Intervalo de Tempo de Resposta</CardTitle
+                  >Intervalo de tempo de resposta</CardTitle
                 >
               </CardHeader>
               <CardContent>
@@ -71,7 +71,7 @@
             <Card>
               <CardHeader class="pb-2">
                 <CardTitle class="text-sm font-medium text-muted-foreground"
-                  >Última Verificação</CardTitle
+                  >Última verificação</CardTitle
                 >
               </CardHeader>
               <CardContent>
@@ -83,7 +83,7 @@
           <Card>
             <CardHeader>
               <div class="flex items-center justify-between">
-                <CardTitle>Verificações Recentes</CardTitle>
+                <CardTitle>Verificações recentes</CardTitle>
                 <div class="flex items-center gap-2">
                   <Button
                     variant="ghost"
@@ -140,7 +140,7 @@
             <Card>
               <CardHeader>
                 <div class="flex items-center justify-between">
-                  <CardTitle>Tendência de Tempo de Resposta</CardTitle>
+                  <CardTitle>Tendência de tempo de resposta</CardTitle>
                   <select
                     v-model="selectedChartDuration"
                     class="text-sm bg-background border rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-ring"
@@ -161,38 +161,11 @@
                 />
               </CardContent>
             </Card>
-
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <Card v-for="period in ['30d', '7d', '24h', '1h']" :key="period">
-                <CardHeader class="pb-2">
-                  <CardTitle
-                    class="text-sm font-medium text-muted-foreground text-center"
-                  >
-                    {{
-                      period === "30d"
-                        ? "Últimos 30 dias"
-                        : period === "7d"
-                        ? "Últimos 7 dias"
-                        : period === "24h"
-                        ? "Últimas 24 horas"
-                        : "Última hora"
-                    }}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <img
-                    :src="generateResponseTimeBadgeImageURL(period)"
-                    :alt="`${period} response time`"
-                    class="mx-auto mt-2"
-                  />
-                </CardContent>
-              </Card>
-            </div>
           </div>
 
           <Card v-if="events && events.length > 0">
             <CardHeader>
-              <CardTitle>Eventos</CardTitle>
+              <CardTitle>Ocorrências </CardTitle>
             </CardHeader>
             <CardContent>
               <div class="space-y-4">
@@ -398,26 +371,26 @@ const fetchData = async () => {
           let event = data.events[i];
           if (i === data.events.length - 1) {
             if (event.type === "UNHEALTHY") {
-              event.fancyText = "Endpoint está não saudável";
+              event.fancyText = "Serviço indisponível";
             } else if (event.type === "HEALTHY") {
-              event.fancyText = "Endpoint está saudável";
+              event.fancyText = "Serviço operando";
             } else if (event.type === "START") {
               event.fancyText = "Monitoramento iniciado";
             }
           } else {
             let nextEvent = data.events[i + 1];
             if (event.type === "HEALTHY") {
-              event.fancyText = "Endpoint tornou-se saudável";
+              event.fancyText = "Serviço voltou a operar";
             } else if (event.type === "UNHEALTHY") {
               if (nextEvent) {
                 event.fancyText =
-                  "Endpoint esteve não saudável por " +
+                  "Serviço ficou indisponível por " +
                   generatePrettyTimeDifference(
                     nextEvent.timestamp,
                     event.timestamp,
                   );
               } else {
-                event.fancyText = "Endpoint tornou-se não saudável";
+                event.fancyText = "Serviço ficou indisponível";
               }
             } else if (event.type === "START") {
               event.fancyText = "Monitoramento iniciado";
@@ -462,10 +435,6 @@ const showTooltip = (result, event, action = "hover") => {
 
 const prettifyTimestamp = (timestamp) => {
   return new Date(timestamp).toLocaleString();
-};
-
-const generateResponseTimeBadgeImageURL = (duration) => {
-  return `/api/v1/endpoints/${endpointStatus.value.key}/response-times/${duration}/badge.svg`;
 };
 
 onMounted(() => {

@@ -49,13 +49,13 @@
       >
         <AlertCircle class="h-12 w-12 text-muted-foreground mx-auto mb-4" />
         <h3 class="text-lg font-semibold mb-2">
-          Nenhum endpoint ou suíte encontrado
+          Nenhum serviço ou suite encontrado
         </h3>
         <p class="text-muted-foreground">
           {{
             searchQuery || showOnlyFailing || showRecentFailures
               ? "Tente ajustar seus filtros"
-              : "Nenhum endpoint ou suíte está configurado"
+              : "Nenhum serviço ou suite está configurado"
           }}
         </p>
       </div>
@@ -132,7 +132,7 @@
                   v-if="items.suites.length > 0"
                   class="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3"
                 >
-                  Endpoints
+                  Serviços
                 </h3>
                 <div
                   class="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
@@ -173,7 +173,7 @@
               v-if="filteredSuites.length > 0"
               class="text-lg font-semibold text-foreground mb-3"
             >
-              Endpoints
+              Serviços
             </h2>
             <div class="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <EndpointCard

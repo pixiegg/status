@@ -40,7 +40,7 @@
         <div
           class="text-xs font-semibold text-muted-foreground uppercase tracking-wider"
         >
-          Endpoints
+          Serviços
         </div>
         <div class="font-mono text-xs">
           <span

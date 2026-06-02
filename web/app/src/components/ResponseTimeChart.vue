@@ -248,7 +248,7 @@ const chartOptions = computed(() => {
               display: () => hoveredEventIndex.value === index,
               content: [
                 event.isOngoing ? `Status: EM ANDAMENTO` : `Status: RESOLVIDO`,
-                `Não saudável por ${event.duration}`,
+                `Indisponível por ${event.duration}`,
                 `Iniciado em ${new Date(event.timestamp).toLocaleString()}`,
               ],
               backgroundColor: getEventColor(),
@@ -272,8 +272,8 @@ const chartOptions = computed(() => {
             props.duration === "24h"
               ? "hour"
               : props.duration === "7d"
-                ? "day"
-                : "day",
+              ? "day"
+              : "day",
           displayFormats: {
             hour: "MMM d, ha",
             day: "MMM d",

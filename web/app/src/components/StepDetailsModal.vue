@@ -38,7 +38,7 @@
                 Sempre Executar
               </p>
               <p class="text-xs text-blue-600 dark:text-blue-400">
-                Este endpoint está configurado para executar mesmo após falhas
+                Este serviço está configurado para executar mesmo após falhas
               </p>
             </div>
           </div>
