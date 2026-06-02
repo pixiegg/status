@@ -5,7 +5,7 @@
       <div class="mb-6">
         <Button variant="ghost" size="sm" @click="goBack" class="mb-4">
           <ArrowLeft class="h-4 w-4 mr-2" />
-          Voltar ao Painel
+          Voltar
         </Button>
 
         <div class="flex items-start justify-between">

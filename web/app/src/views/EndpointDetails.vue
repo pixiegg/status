@@ -4,7 +4,7 @@
       <div class="mb-6">
         <Button variant="ghost" class="mb-4" @click="goBack">
           <ArrowLeft class="h-4 w-4 mr-2" />
-          Voltar ao Painel
+          Voltar
         </Button>
 
         <div v-if="endpointStatus && endpointStatus.name" class="space-y-6">
@@ -28,7 +28,7 @@
             <Card>
               <CardHeader class="pb-2">
                 <CardTitle class="text-sm font-medium text-muted-foreground"
-                  >Status Atual</CardTitle
+                  >Status atual</CardTitle
                 >
               </CardHeader>
               <CardContent>

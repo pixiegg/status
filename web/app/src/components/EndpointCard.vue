@@ -1,6 +1,11 @@
 <template>
   <Card
-    class="endpoint h-full flex flex-col transition hover:shadow-lg hover:scale-[1.01] dark:hover:border-gray-700"
+    class="group endpoint h-full flex flex-col transition hover:shadow-lg hover:scale-[1.01] dark:hover:border-gray-700 cursor-pointer"
+    @click="navigateToDetails"
+    @keydown.enter="navigateToDetails"
+    role="link"
+    tabindex="0"
+    :aria-label="`Ver detalhes de ${endpoint.name}`"
   >
     <CardHeader
       class="endpoint-header px-3 sm:px-6 pt-3 sm:pt-6 pb-2 space-y-0"
@@ -9,13 +14,8 @@
         <div class="flex-1 min-w-0 overflow-hidden">
           <CardTitle class="text-base sm:text-lg truncate">
             <span
-              class="hover:text-primary cursor-pointer hover:underline text-sm sm:text-base block truncate"
-              @click="navigateToDetails"
-              @keydown.enter="navigateToDetails"
+              class="transition-colors group-hover:text-primary text-sm sm:text-base block truncate"
               :title="endpoint.name"
-              role="link"
-              tabindex="0"
-              :aria-label="`Ver detalhes de ${endpoint.name}`"
             >
               {{ endpoint.name }}
             </span>
@@ -62,15 +62,14 @@
               :key="index"
               :class="[
                 'flex-1 h-6 sm:h-8 rounded-sm transition-all',
-                result ? 'cursor-pointer' : '',
                 result
                   ? result.success
                     ? selectedResultIndex === index
                       ? 'bg-green-700'
                       : 'bg-green-500 hover:bg-green-700'
                     : selectedResultIndex === index
-                      ? 'bg-red-700'
-                      : 'bg-red-500 hover:bg-red-700'
+                    ? 'bg-red-700'
+                    : 'bg-red-500 hover:bg-red-700'
                   : 'bg-gray-200 dark:bg-gray-700',
               ]"
               @mouseenter="result && handleMouseEnter(result, $event)"
