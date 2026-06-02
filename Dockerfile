@@ -1,8 +1,18 @@
+# Build the frontend
+FROM node:20-alpine AS frontend-builder
+WORKDIR /app
+COPY web/app/package*.json ./web/app/
+RUN cd web/app && npm install
+COPY web/app/ ./web/app/
+RUN cd web/app && npm run build
+
 # Build the go application into a binary
 FROM golang:alpine AS builder
 RUN apk --update add ca-certificates
 WORKDIR /app
 COPY . ./
+# Copy the built frontend static files from frontend-builder
+COPY --from=frontend-builder /app/web/static ./web/static
 RUN go mod tidy -diff
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gatus .
 
