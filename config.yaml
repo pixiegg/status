@@ -8,6 +8,18 @@ ui:
   dashboard-subheading: "Confira se o Pixie está funcionando como esperado."
   header: "Pixie"
   dark-mode: false
+  custom-css: |
+    header {
+      border: 0;
+    }
+
+    a {
+      color: #00B4CC !important;
+    }
+
+    div#social {
+      display: none;
+    }
 
 .default-public-endpoint: &public_settings
   interval: 1m
