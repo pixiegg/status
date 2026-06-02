@@ -7,6 +7,13 @@
     "build": "vue-cli-service build --modern --mode production",
     "lint": "vue-cli-service lint"
   },
+  "overrides": {
+    "uuid": "14.0.0",
+    "serialize-javascript": "7.0.5",
+    "cross-spawn": "7.0.6",
+    "postcss": "8.5.15",
+    "webpack-dev-server": "5.2.4"
+  },
   "dependencies": {
     "chart.js": "^4.5.1",
     "chartjs-adapter-date-fns": "^3.0.0",
@@ -33,7 +40,7 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^8.57.1",
     "eslint-plugin-vue": "^9.28.0",
-    "postcss": "^8.5.6",
+    "postcss": "8.5.15",
     "tailwindcss": "^3.1.8"
   },
   "eslintConfig": {
@@ -50,9 +57,25 @@
       "requireConfigFile": false
     },
     "rules": {
-      "vue/multi-word-component-names": ["error", {
-        "ignores": ["Home", "Details", "Loading", "Settings", "Social", "Tooltip", "Pagination", "Button", "Badge", "Card", "Input", "Select"]
-      }]
+      "vue/multi-word-component-names": [
+        "error",
+        {
+          "ignores": [
+            "Home",
+            "Details",
+            "Loading",
+            "Settings",
+            "Social",
+            "Tooltip",
+            "Pagination",
+            "Button",
+            "Badge",
+            "Card",
+            "Input",
+            "Select"
+          ]
+        }
+      ]
     },
     "globals": {
       "defineProps": "readonly",
