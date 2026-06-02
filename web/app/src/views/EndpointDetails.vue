@@ -190,53 +190,6 @@
             </div>
           </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Estatísticas de Uptime</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <div
-                  v-for="period in ['30d', '7d', '24h', '1h']"
-                  :key="period"
-                  class="text-center"
-                >
-                  <p class="text-sm text-muted-foreground mb-2">
-                    {{
-                      period === "30d"
-                        ? "Últimos 30 dias"
-                        : period === "7d"
-                          ? "Últimos 7 dias"
-                          : period === "24h"
-                            ? "Últimas 24 horas"
-                            : "Última hora"
-                    }}
-                  </p>
-                  <img
-                    :src="generateUptimeBadgeImageURL(period)"
-                    :alt="`${period} uptime`"
-                    class="mx-auto"
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Saúde Atual</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div class="text-center">
-                <img
-                  :src="generateHealthBadgeImageURL()"
-                  alt="health badge"
-                  class="mx-auto"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
           <Card v-if="events && events.length > 0">
             <CardHeader>
               <CardTitle>Eventos</CardTitle>
