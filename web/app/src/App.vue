@@ -20,31 +20,22 @@
         <div class="container mx-auto px-4 py-4 max-w-7xl">
           <div class="flex items-center justify-between">
             <!-- Logo and Title -->
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 flex-1">
               <component
                 :is="link ? 'a' : 'div'"
                 :href="link"
                 target="_blank"
                 :class="[
-                  'flex items-center gap-3',
+                  'flex items-center gap-3 w-full',
                   link && 'hover:opacity-80 transition-opacity',
                 ]"
               >
-                <div class="w-12 h-12 flex items-center justify-center">
+                <div
+                  class="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] flex items-center"
+                >
                   <AppLogo
-                    class="w-full h-full object-contain text-black dark:text-white"
+                    class="w-full h-auto object-contain text-black dark:text-white"
                   />
-                </div>
-                <div>
-                  <h1 class="text-2xl font-bold tracking-tight">
-                    {{ header }}
-                  </h1>
-                  <p
-                    v-if="buttons && buttons.length"
-                    class="text-sm text-muted-foreground"
-                  >
-                    Painel de Monitoramento do Sistema
-                  </p>
                 </div>
               </component>
             </div>
@@ -118,7 +109,9 @@
       <Card class="w-full max-w-md">
         <CardHeader class="text-center">
           <div class="flex items-center justify-center gap-4 mb-4">
-            <AppLogo class="w-20 h-20 text-black dark:text-white" />
+            <AppLogo
+              class="w-full max-w-[240px] h-auto text-black dark:text-white"
+            />
           </div>
           <CardTitle class="text-3xl">{{ header }}</CardTitle>
           <p class="text-muted-foreground mt-2">{{ loginSubtitle }}</p>
