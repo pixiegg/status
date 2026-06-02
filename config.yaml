@@ -35,8 +35,7 @@ storage:
   path: "${DATABASE_URL}"
 
 endpoints:
-  - name: "Health Check - Pix"
-    group: "Serviços Internos"
+  - name: "Pagamentos via PIX"
     url: "https://api-v2-684289935571.us-central1.run.app/internal/health/pix"
     method: GET
     headers:
@@ -45,8 +44,7 @@ endpoints:
     conditions:
       - "[STATUS] < 400"
 
-  - name: "Health Check - Internacional"
-    group: "Serviços Internos"
+  - name: "Pagamentos internacionais"
     url: "https://api-v2-684289935571.us-central1.run.app/internal/health/intl"
     method: GET
     headers:
@@ -55,8 +53,7 @@ endpoints:
     conditions:
       - "[STATUS] < 400"
 
-  - name: "Health Check - AI Voices"
-    group: "Serviços Internos"
+  - name: "IA generativa"
     url: "https://api-v2-684289935571.us-central1.run.app/internal/health/ai-voices"
     method: GET
     headers:
@@ -65,24 +62,21 @@ endpoints:
     conditions:
       - "[STATUS] < 400"
 
-  - name: "API"
-    group: "Plataforma Pixie"
+  - name: "API principal"
     url: "https://api.pixie.gg"
     method: GET
     <<: *public_settings
     conditions:
       - "[STATUS] < 400"
 
-  - name: "Landing"
-    group: "Plataforma Pixie"
+  - name: "Página principal"
     url: "https://pixie.gg"
     method: GET
     <<: *public_settings
     conditions:
       - "[STATUS] < 400"
 
-  - name: "Dashboard"
-    group: "Plataforma Pixie"
+  - name: "Painel do criador"
     url: "https://dashboard.pixie.gg"
     method: GET
     <<: *public_settings
