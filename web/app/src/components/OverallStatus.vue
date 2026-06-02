@@ -14,7 +14,9 @@
           :class="['relative inline-flex rounded-full h-3 w-3', dotColorClass]"
         ></span>
       </div>
-      <h2 class="text-lg sm:text-xl font-medium tracking-tight text-foreground">
+      <h2
+        class="ml-2 text-lg sm:text-xl font-medium tracking-tight text-foreground"
+      >
         {{ statusText }}
       </h2>
     </CardContent>

@@ -17,7 +17,7 @@
       <header
         class="border-b bg-card/50 backdrop-blur supports-[backdrop-filter]:bg-card/60"
       >
-        <div class="container mx-auto px-4 py-4 max-w-7xl">
+        <div class="container mx-auto px-4 pt-6 pb-4 max-w-7xl">
           <div class="flex items-center justify-between">
             <!-- Logo and Title -->
             <div class="flex items-center gap-4 flex-1">
@@ -31,7 +31,7 @@
                 ]"
               >
                 <div
-                  class="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] flex items-center"
+                  class="w-full max-w-[140px] sm:max-w-[160px] md:max-w-[180px] flex items-center"
                 >
                   <AppLogo
                     class="w-full h-auto object-contain text-black dark:text-white"

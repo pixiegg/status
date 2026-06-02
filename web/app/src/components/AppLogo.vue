@@ -1,9 +1,10 @@
 <template>
   <svg
+    @click="$router.push('/')"
     data-name="Layer 2"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 554.24 162.8"
-    :class="$attrs.class"
+    :class="[$attrs.class, 'cursor-pointer']"
   >
     <g data-name="Layer 2">
       <path
