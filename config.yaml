@@ -15,7 +15,7 @@ ui:
   title: "Pixie • Status do sistema"
   description: "Confira se o Pixie está funcionando como esperado."
   dashboard-heading: "Status do sistema"
-  dashboard-subheading: "Confira se o Pixie está funcionando como esperado."
+  dashboard-subheading: "Confira se o Pixie está funcionando como esperado"
   header: "Pixie"
   dark-mode: false
   custom-css: |
