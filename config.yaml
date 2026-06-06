@@ -23,11 +23,6 @@ ui:
       border: 0;
     }
 
-announcements:
-  - timestamp: 2026-06-06T22:16:00Z
-    type: outage
-    message: "🔴 **Incidente em andamento** — Estamos investigando uma instabilidade no painel do criador. Atualizações serão postadas aqui."
-
 .default-public-endpoint: &public_settings
   interval: 1m
   ui:
