@@ -73,10 +73,7 @@
               @click.stop="result && handleClick(result, $event, index)"
             />
           </div>
-          <div
-            class="flex items-center justify-between text-xs text-muted-foreground mt-1"
-          >
-            <span>{{ newestResultTime }}</span>
+          <div class="mt-1 text-xs text-muted-foreground">
             <span class="font-mono">{{ uptimePercentage }}</span>
           </div>
         </div>
@@ -90,7 +87,6 @@ import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import StatusBadge from "@/components/StatusBadge.vue";
-import { generatePrettyTimeAgo } from "@/utils/time";
 
 const router = useRouter();
 
@@ -117,7 +113,10 @@ const displayResults = computed(() => {
   if (groupSize <= 1) {
     const flat =
       results.length < props.displayBarCount
-        ? [...Array(props.displayBarCount - results.length).fill(null), ...results]
+        ? [
+            ...Array(props.displayBarCount - results.length).fill(null),
+            ...results,
+          ]
         : results.slice(-props.displayBarCount);
     return flat;
   }
@@ -183,15 +182,6 @@ const averageDuration = computed(() => {
 const uptimePercentage = computed(() => {
   if (props.suite.uptime30d == null) return "100.00%";
   return `${(props.suite.uptime30d * 100).toFixed(2)}%`;
-});
-
-const newestResultTime = computed(() => {
-  if (!props.suite.results || props.suite.results.length === 0) {
-    return "Agora";
-  }
-
-  const newestResult = props.suite.results[props.suite.results.length - 1];
-  return generatePrettyTimeAgo(newestResult.timestamp);
 });
 
 // Methods

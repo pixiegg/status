@@ -77,10 +77,7 @@
               @click.stop="result && handleClick(result, $event, index)"
             />
           </div>
-          <div
-            class="flex items-center justify-between text-xs text-muted-foreground mt-1"
-          >
-            <span>{{ newestResultTime }}</span>
+          <div class="mt-1 text-xs text-muted-foreground">
             <span class="font-mono">{{ uptimePercentage }}</span>
           </div>
         </div>
@@ -94,7 +91,6 @@ import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import StatusBadge from "@/components/StatusBadge.vue";
-import { generatePrettyTimeAgo } from "@/utils/time";
 
 const router = useRouter();
 
@@ -203,13 +199,6 @@ const formattedResponseTime = computed(() => {
 const uptimePercentage = computed(() => {
   if (props.endpoint.uptime30d == null) return "100.00%";
   return `${(props.endpoint.uptime30d * 100).toFixed(2)}%`;
-});
-
-const newestResultTime = computed(() => {
-  if (!props.endpoint.results || props.endpoint.results.length === 0) return "";
-  return generatePrettyTimeAgo(
-    props.endpoint.results[props.endpoint.results.length - 1].timestamp,
-  );
 });
 
 const navigateToDetails = () => {
