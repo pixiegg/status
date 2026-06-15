@@ -64,8 +64,8 @@
                       ? 'bg-green-700'
                       : 'bg-green-500 hover:bg-green-700'
                     : selectedResultIndex === index
-                      ? 'bg-red-700'
-                      : 'bg-red-500 hover:bg-red-700'
+                    ? 'bg-red-700'
+                    : 'bg-red-500 hover:bg-red-700'
                   : 'bg-gray-200 dark:bg-gray-700',
               ]"
               @mouseenter="result && handleMouseEnter(result, $event)"
@@ -76,8 +76,8 @@
           <div
             class="flex items-center justify-between text-xs text-muted-foreground mt-1"
           >
-            <span>{{ oldestResultTime }}</span>
             <span>{{ newestResultTime }}</span>
+            <span>{{ oldestResultTime }}</span>
           </div>
         </div>
       </div>
@@ -103,6 +103,10 @@ const props = defineProps({
     type: Number,
     default: 50,
   },
+  groupBySize: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const emit = defineEmits(["showTooltip"]);
@@ -112,11 +116,32 @@ const selectedResultIndex = ref(null);
 
 // Computed properties
 const displayResults = computed(() => {
-  const results = [...(props.suite.results || [])];
-  while (results.length < props.maxResults) {
-    results.unshift(null);
+  const results = props.suite.results || [];
+  if (!props.groupBySize || props.groupBySize <= 1) {
+    const flat = results.length < props.maxResults
+      ? [...Array(props.maxResults - results.length).fill(null), ...results]
+      : results.slice(-props.maxResults);
+    return flat;
   }
-  return results.slice(-props.maxResults);
+
+  const groups = [];
+  for (let i = results.length - 1; i >= 0; i -= props.groupBySize) {
+    const start = Math.max(0, i - props.groupBySize + 1);
+    const group = results.slice(start, i + 1);
+    const allSuccess = group.every((r) => r.success);
+    groups.unshift({
+      success: allSuccess,
+      timestamp: group[group.length - 1].timestamp,
+      duration:
+        group.reduce((sum, r) => sum + (r.duration || 0), 0) / group.length,
+    });
+  }
+
+  while (groups.length < props.maxResults) {
+    groups.unshift(null);
+  }
+
+  return groups.slice(-props.maxResults);
 });
 
 const currentStatus = computed(() => {
