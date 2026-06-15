@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/TwiN/gatus/v5/config"
 	"github.com/TwiN/gatus/v5/config/endpoint"
 	"github.com/TwiN/gatus/v5/storage/store"
@@ -15,14 +17,19 @@ type overallStatusResponse struct {
 
 func OverallStatus(cfg *config.Config) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		pageSize := cfg.Storage.MaximumNumberOfResults
-		endpointStatuses, err := store.Get().GetAllEndpointStatuses(paging.NewEndpointStatusParams().WithResults(1, pageSize))
-		if err != nil {
-			logr.Errorf("[api.OverallStatus] Failed to retrieve endpoint statuses: %s", err.Error())
-			return c.Status(500).SendString(err.Error())
+		value, exists := cache.Get("overall-status")
+		var overall string
+		if !exists {
+			endpointStatuses, err := store.Get().GetAllEndpointStatuses(paging.NewEndpointStatusParams().WithResults(1, 1))
+			if err != nil {
+				logr.Errorf("[api.OverallStatus] Failed to retrieve endpoint statuses: %s", err.Error())
+				return c.Status(500).SendString(err.Error())
+			}
+			overall = computeOverallStatus(endpointStatuses)
+			cache.SetWithTTL("overall-status", overall, cacheTTL)
+		} else {
+			overall = fmt.Sprint(value)
 		}
-
-		overall := computeOverallStatus(endpointStatuses)
 		return c.Status(200).JSON(overallStatusResponse{OverallStatus: overall})
 	}
 }
