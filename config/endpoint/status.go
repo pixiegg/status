@@ -20,6 +20,9 @@ type Status struct {
 	// Events is a list of events
 	Events []*Event `json:"events,omitempty"`
 
+	// Uptime30d is the uptime percentage over the last 30 days (0.0 to 1.0)
+	Uptime30d *float64 `json:"uptime30d,omitempty"`
+
 	// Uptime information on the endpoint's uptime
 	//
 	// Used by the memory store.

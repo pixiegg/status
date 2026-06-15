@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/TwiN/gatus/v5/config"
 	"github.com/TwiN/gatus/v5/config/suite"
@@ -29,6 +30,7 @@ func SuiteStatuses(cfg *config.Config) fiber.Handler {
 				}
 			}
 		}
+		populateSuiteUptime(suiteStatuses)
 		return c.Status(fiber.StatusOK).JSON(suiteStatuses)
 	}
 }
@@ -54,6 +56,31 @@ func SuiteStatus(cfg *config.Config) fiber.Handler {
 				})
 			}
 		}
+		populateSuiteUptime([]*suite.Status{status})
 		return c.Status(fiber.StatusOK).JSON(status)
+	}
+}
+
+func populateSuiteUptime(statuses []*suite.Status) {
+	thirtyDaysAgo := time.Now().Add(-30 * 24 * time.Hour)
+	for _, s := range statuses {
+		if s == nil || len(s.Results) == 0 {
+			continue
+		}
+		total := 0
+		successful := 0
+		for _, r := range s.Results {
+			if r.Timestamp.After(thirtyDaysAgo) || r.Timestamp.Equal(thirtyDaysAgo) {
+				total++
+				if r.Success {
+					successful++
+				}
+			}
+		}
+		if total == 0 {
+			continue
+		}
+		uptime := float64(successful) / float64(total)
+		s.Uptime30d = &uptime
 	}
 }

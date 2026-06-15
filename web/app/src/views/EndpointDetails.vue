@@ -45,25 +45,12 @@
             <Card>
               <CardHeader class="pb-2">
                 <CardTitle class="text-sm font-medium text-muted-foreground"
-                  >Tempo médio de resposta</CardTitle
+                  >Disponibilidade nos últimos 30 dias</CardTitle
                 >
               </CardHeader>
               <CardContent>
                 <div class="text-2xl font-bold">
-                  {{ pageAverageResponseTime }}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader class="pb-2">
-                <CardTitle class="text-sm font-medium text-muted-foreground"
-                  >Intervalo de tempo de resposta</CardTitle
-                >
-              </CardHeader>
-              <CardContent>
-                <div class="text-2xl font-bold">
-                  {{ pageResponseTimeRange }}
+                  {{ endpointUptime30d }}
                 </div>
               </CardContent>
             </Card>
@@ -76,6 +63,19 @@
               </CardHeader>
               <CardContent>
                 <div class="text-2xl font-bold">{{ lastCheckTime }}</div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader class="pb-2">
+                <CardTitle class="text-sm font-medium text-muted-foreground"
+                  >Tempo médio de resposta</CardTitle
+                >
+              </CardHeader>
+              <CardContent>
+                <div class="text-2xl font-bold">
+                  {{ pageAverageResponseTime }}
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -300,36 +300,11 @@ const pageAverageResponseTime = computed(() => {
   return `${Math.round(total / count / 1000000)}ms`;
 });
 
-const pageResponseTimeRange = computed(() => {
-  // Use endpointStatus for current page's response time range
-  if (
-    !endpointStatus.value ||
-    !endpointStatus.value.results ||
-    endpointStatus.value.results.length === 0
-  ) {
-    return "N/A";
+const endpointUptime30d = computed(() => {
+  if (!endpointStatus.value || endpointStatus.value.uptime30d == null) {
+    return "100.00%";
   }
-  let min = Infinity;
-  let max = 0;
-  let hasData = false;
-
-  for (const result of endpointStatus.value.results) {
-    const duration = result.duration;
-    if (duration) {
-      min = Math.min(min, duration);
-      max = Math.max(max, duration);
-      hasData = true;
-    }
-  }
-
-  if (!hasData) return "N/A";
-  const minMs = Math.trunc(min / 1000000);
-  const maxMs = Math.trunc(max / 1000000);
-  // If min and max are the same, show single value
-  if (minMs === maxMs) {
-    return `${minMs}ms`;
-  }
-  return `${minMs}-${maxMs}ms`;
+  return `${(endpointStatus.value.uptime30d * 100).toFixed(2)}%`;
 });
 
 const lastCheckTime = computed(() => {

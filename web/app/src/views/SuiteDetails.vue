@@ -68,7 +68,7 @@
           <CardContent>
             <div class="space-y-4">
               <!-- Execution stats -->
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                 <div>
                   <p class="text-sm text-muted-foreground">Status</p>
                   <p class="text-lg font-medium">
@@ -82,7 +82,7 @@
                   </p>
                 </div>
                 <div>
-                  <p class="text-sm text-muted-foreground">Endpoints</p>
+                  <p class="text-sm text-muted-foreground">Serviços</p>
                   <p class="text-lg font-medium">
                     {{ latestResult.endpointResults?.length || 0 }}
                   </p>
@@ -91,6 +91,12 @@
                   <p class="text-sm text-muted-foreground">Taxa de Sucesso</p>
                   <p class="text-lg font-medium">
                     {{ calculateSuccessRate(latestResult) }}%
+                  </p>
+                </div>
+                <div>
+                  <p class="text-sm text-muted-foreground">Disponibilidade</p>
+                  <p class="text-lg font-medium">
+                    {{ suiteUptime30d }}
                   </p>
                 </div>
               </div>
@@ -319,6 +325,11 @@ const calculateSuccessRate = (result) => {
   const successful = result.endpointResults.filter((e) => e.success).length;
   return Math.round((successful / result.endpointResults.length) * 100);
 };
+
+const suiteUptime30d = computed(() => {
+  if (!suite.value || suite.value.uptime30d == null) return "100.00%";
+  return `${(suite.value.uptime30d * 100).toFixed(2)}%`;
+});
 
 // Flow diagram computed properties
 const flowSteps = computed(() => {

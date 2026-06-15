@@ -77,7 +77,7 @@
             class="flex items-center justify-between text-xs text-muted-foreground mt-1"
           >
             <span>{{ newestResultTime }}</span>
-            <span>{{ oldestResultTime }}</span>
+            <span class="font-mono">{{ uptimePercentage }}</span>
           </div>
         </div>
       </div>
@@ -118,9 +118,10 @@ const selectedResultIndex = ref(null);
 const displayResults = computed(() => {
   const results = props.suite.results || [];
   if (!props.groupBySize || props.groupBySize <= 1) {
-    const flat = results.length < props.maxResults
-      ? [...Array(props.maxResults - results.length).fill(null), ...results]
-      : results.slice(-props.maxResults);
+    const flat =
+      results.length < props.maxResults
+        ? [...Array(props.maxResults - results.length).fill(null), ...results]
+        : results.slice(-props.maxResults);
     return flat;
   }
 
@@ -179,17 +180,12 @@ const averageDuration = computed(() => {
     (sum, r) => sum + (r.duration || 0),
     0,
   );
-  // Convert nanoseconds to milliseconds
   return Math.trunc(total / props.suite.results.length / 1000000);
 });
 
-const oldestResultTime = computed(() => {
-  if (!props.suite.results || props.suite.results.length === 0) {
-    return "N/D";
-  }
-
-  const oldestResult = props.suite.results[0];
-  return generatePrettyTimeAgo(oldestResult.timestamp);
+const uptimePercentage = computed(() => {
+  if (props.suite.uptime30d == null) return "100.00%";
+  return `${(props.suite.uptime30d * 100).toFixed(2)}%`;
 });
 
 const newestResultTime = computed(() => {

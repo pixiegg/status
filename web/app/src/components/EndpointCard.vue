@@ -81,7 +81,7 @@
             class="flex items-center justify-between text-xs text-muted-foreground mt-1"
           >
             <span>{{ newestResultTime }}</span>
-            <span>{{ oldestResultTime }}</span>
+            <span class="font-mono">{{ uptimePercentage }}</span>
           </div>
         </div>
       </div>
@@ -141,9 +141,10 @@ const hostname = computed(() => {
 const displayResults = computed(() => {
   const results = props.endpoint.results || [];
   if (!props.groupBySize || props.groupBySize <= 1) {
-    const flat = results.length < props.maxResults
-      ? [...Array(props.maxResults - results.length).fill(null), ...results]
-      : results.slice(-props.maxResults);
+    const flat =
+      results.length < props.maxResults
+        ? [...Array(props.maxResults - results.length).fill(null), ...results]
+        : results.slice(-props.maxResults);
     return flat;
   }
 
@@ -193,10 +194,8 @@ const formattedResponseTime = computed(() => {
     const avgMs = Math.round(total / count);
     return `~${avgMs}ms`;
   } else {
-    // Show min-max range
     const minMs = Math.trunc(min);
     const maxMs = Math.trunc(max);
-    // If min and max are the same, show single value
     if (minMs === maxMs) {
       return `${minMs}ms`;
     }
@@ -204,9 +203,9 @@ const formattedResponseTime = computed(() => {
   }
 });
 
-const oldestResultTime = computed(() => {
-  if (!props.endpoint.results || props.endpoint.results.length === 0) return "";
-  return generatePrettyTimeAgo(props.endpoint.results[0].timestamp);
+const uptimePercentage = computed(() => {
+  if (props.endpoint.uptime30d == null) return "100.00%";
+  return `${(props.endpoint.uptime30d * 100).toFixed(2)}%`;
 });
 
 const newestResultTime = computed(() => {

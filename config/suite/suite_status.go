@@ -13,6 +13,9 @@ type Status struct {
 
 	// Results is the list of suite execution results
 	Results []*Result `json:"results"`
+
+	// Uptime30d is the uptime percentage over the last 30 days (0.0 to 1.0)
+	Uptime30d *float64 `json:"uptime30d,omitempty"`
 }
 
 // NewStatus creates a new Status for a given Suite

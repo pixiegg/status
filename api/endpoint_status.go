@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/TwiN/gatus/v5/client"
 	"github.com/TwiN/gatus/v5/config"
@@ -36,6 +37,7 @@ func EndpointStatuses(cfg *config.Config) fiber.Handler {
 			} else if endpointStatusesFromRemote != nil {
 				endpointStatuses = append(endpointStatuses, endpointStatusesFromRemote...)
 			}
+			populateUptime(endpointStatuses)
 			// Marshal endpoint statuses to JSON
 			data, err = json.Marshal(endpointStatuses)
 			if err != nil {
@@ -104,6 +106,7 @@ func EndpointStatus(cfg *config.Config) fiber.Handler {
 			logr.Errorf("[api.EndpointStatus] Endpoint with key=%s not found", key)
 			return c.Status(404).SendString("not found")
 		}
+		populateUptime([]*endpoint.Status{endpointStatus})
 		output, err := json.Marshal(endpointStatus)
 		if err != nil {
 			logr.Errorf("[api.EndpointStatus] Unable to marshal object to JSON: %s", err.Error())
@@ -111,5 +114,21 @@ func EndpointStatus(cfg *config.Config) fiber.Handler {
 		}
 		c.Set("Content-Type", "application/json")
 		return c.Status(200).Send(output)
+	}
+}
+
+func populateUptime(statuses []*endpoint.Status) {
+	from := time.Now().Add(-30 * 24 * time.Hour)
+	to := time.Now()
+	for _, s := range statuses {
+		if s == nil || s.Key == "" {
+			continue
+		}
+		uptime, err := store.Get().GetUptimeByKey(s.Key, from, to)
+		if err != nil {
+			continue
+		}
+		uptimeCopy := uptime
+		s.Uptime30d = &uptimeCopy
 	}
 }
