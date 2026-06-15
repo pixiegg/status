@@ -99,13 +99,9 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  maxResults: {
+  displayBarCount: {
     type: Number,
     default: 50,
-  },
-  groupBySize: {
-    type: Number,
-    default: 0,
   },
 });
 
@@ -117,17 +113,18 @@ const selectedResultIndex = ref(null);
 // Computed properties
 const displayResults = computed(() => {
   const results = props.suite.results || [];
-  if (!props.groupBySize || props.groupBySize <= 1) {
+  const groupSize = Math.ceil(results.length / props.displayBarCount) || 1;
+  if (groupSize <= 1) {
     const flat =
-      results.length < props.maxResults
-        ? [...Array(props.maxResults - results.length).fill(null), ...results]
-        : results.slice(-props.maxResults);
+      results.length < props.displayBarCount
+        ? [...Array(props.displayBarCount - results.length).fill(null), ...results]
+        : results.slice(-props.displayBarCount);
     return flat;
   }
 
   const groups = [];
-  for (let i = results.length - 1; i >= 0; i -= props.groupBySize) {
-    const start = Math.max(0, i - props.groupBySize + 1);
+  for (let i = results.length - 1; i >= 0; i -= groupSize) {
+    const start = Math.max(0, i - groupSize + 1);
     const group = results.slice(start, i + 1);
     const allSuccess = group.every((r) => r.success);
     groups.unshift({
@@ -138,11 +135,11 @@ const displayResults = computed(() => {
     });
   }
 
-  while (groups.length < props.maxResults) {
+  while (groups.length < props.displayBarCount) {
     groups.unshift(null);
   }
 
-  return groups.slice(-props.maxResults);
+  return groups.slice(-props.displayBarCount);
 });
 
 const currentStatus = computed(() => {

@@ -117,7 +117,7 @@
                 <EndpointCard
                   v-if="endpointStatus"
                   :endpoint="endpointStatus"
-                  :maxResults="resultPageSize"
+                  :displayBarCount="resultPageSize"
                   :showAverageResponseTime="showAverageResponseTime"
                   @showTooltip="showTooltip"
                   class="border-0 shadow-none bg-transparent p-0"

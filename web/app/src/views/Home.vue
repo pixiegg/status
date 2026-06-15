@@ -126,8 +126,7 @@
                     v-for="suite in items.suites"
                     :key="suite.key"
                     :suite="suite"
-                    :maxResults="displayBarCount"
-                    :groupBySize="5"
+                    :displayBarCount="displayBarCount"
                     @showTooltip="showTooltip"
                   />
                 </div>
@@ -148,9 +147,8 @@
                     v-for="endpoint in items.endpoints"
                     :key="endpoint.key"
                     :endpoint="endpoint"
-                    :maxResults="displayBarCount"
+                    :displayBarCount="displayBarCount"
                     :showAverageResponseTime="showAverageResponseTime"
-                    :groupBySize="5"
                     @showTooltip="showTooltip"
                   />
                 </div>
@@ -169,8 +167,7 @@
                 v-for="suite in paginatedSuites"
                 :key="suite.key"
                 :suite="suite"
-                :maxResults="displayBarCount"
-                :groupBySize="5"
+                :displayBarCount="displayBarCount"
                 @showTooltip="showTooltip"
               />
             </div>
@@ -189,9 +186,8 @@
                 v-for="endpoint in paginatedEndpoints"
                 :key="endpoint.key"
                 :endpoint="endpoint"
-                :maxResults="displayBarCount"
+                :displayBarCount="displayBarCount"
                 :showAverageResponseTime="showAverageResponseTime"
-                :groupBySize="5"
                 @showTooltip="showTooltip"
               />
             </div>
@@ -302,8 +298,9 @@ const showAverageResponseTime = ref(
 const groupByGroup = ref(false);
 const sortBy = ref(localStorage.getItem("gatus:sort-by") || "name");
 const uncollapsedGroups = ref(new Set());
-const resultPageSize = 50;
-const displayBarCount = 10;
+const displayBarCount = 50;
+const intervalInMinutes = 5;
+const resultPageSize = displayBarCount * intervalInMinutes;
 
 const filteredEndpoints = computed(() => {
   let filtered = [...endpointStatuses.value];
