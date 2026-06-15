@@ -95,9 +95,9 @@ const dotColorClass = computed(() => {
     case "healthy":
       return "bg-green-400";
     case "unhealthy":
-    case "unhealthy_partial":
-      return "bg-red-400";
     case "degraded":
+      return "bg-red-400";
+    case "unhealthy_partial":
     case "degraded_partial":
       return "bg-yellow-400";
     default:
