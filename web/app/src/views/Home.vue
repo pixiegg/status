@@ -36,11 +36,7 @@
         <!-- Announcement Banner (Active Announcements) -->
         <AnnouncementBanner :announcements="activeAnnouncements" />
 
-        <OverallStatus
-          v-if="!loading && endpointStatuses.length > 0"
-          :endpoints="endpointStatuses"
-          class="mt-6"
-        />
+        <OverallStatus v-if="!loading" :status="overallStatus" class="mt-6" />
       </div>
 
       <div v-if="loading" class="flex items-center justify-center py-20">
@@ -286,6 +282,7 @@ const emit = defineEmits(["showTooltip"]);
 
 const endpointStatuses = ref([]);
 const suiteStatuses = ref([]);
+const overallStatus = ref("unknown");
 const loading = ref(false);
 const currentPage = ref(1);
 const itemsPerPage = 96;
@@ -558,10 +555,23 @@ const fetchData = async () => {
         "[Home][fetchData] Error fetching suites:",
         await suiteResponse.text(),
       );
-      // Ensure suiteStatuses stays as empty array instead of becoming null/undefined
       if (!suiteStatuses.value) {
         suiteStatuses.value = [];
       }
+    }
+
+    // Fetch overall status
+    const overallResponse = await fetch("/api/v1/overall-status", {
+      credentials: "include",
+    });
+    if (overallResponse.status === 200) {
+      const overallData = await overallResponse.json();
+      overallStatus.value = overallData.overallStatus;
+    } else {
+      console.error(
+        "[Home][fetchData] Error fetching overall status:",
+        await overallResponse.text(),
+      );
     }
   } catch (error) {
     console.error("[Home][fetchData] Error:", error);

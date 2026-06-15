@@ -132,5 +132,6 @@ func (a *API) createRouter(cfg *config.Config) *fiber.App {
 	protectedAPIRouter.Get("/v1/endpoints/:key/statuses", EndpointStatus(cfg))
 	protectedAPIRouter.Get("/v1/suites/statuses", SuiteStatuses(cfg))
 	protectedAPIRouter.Get("/v1/suites/:key/statuses", SuiteStatus(cfg))
+	protectedAPIRouter.Get("/v1/overall-status", OverallStatus(cfg))
 	return app
 }

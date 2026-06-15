@@ -28,70 +28,27 @@ import { computed } from "vue";
 import { Card, CardContent } from "@/components/ui/card";
 
 const props = defineProps({
-  endpoints: {
-    type: Array,
+  status: {
+    type: String,
     required: true,
-    default: () => [],
+    default: "unknown",
   },
 });
 
-const getEndpointStatus = (endpoint) => {
-  if (
-    endpoint.status &&
-    ["healthy", "unhealthy", "degraded"].includes(endpoint.status)
-  ) {
-    return endpoint.status;
-  }
-  if (!endpoint.results || endpoint.results.length === 0) return "unknown";
-  const latestResult = endpoint.results[endpoint.results.length - 1];
-  return latestResult.success ? "healthy" : "unhealthy";
+const statusMap = {
+  healthy: "Todos sistemas operando",
+  unhealthy: "Indisponibilidade total",
+  degraded: "Lentidão total",
+  unhealthy_partial: "Indisponibilidade parcial",
+  degraded_partial: "Lentidão parcial",
 };
 
-const overallState = computed(() => {
-  if (!props.endpoints || props.endpoints.length === 0) {
-    return { status: "unknown", text: "Aguardando status..." };
-  }
-
-  const statuses = props.endpoints
-    .map(getEndpointStatus)
-    .filter((s) => s !== "unknown");
-
-  if (statuses.length === 0) {
-    return { status: "unknown", text: "Aguardando status..." };
-  }
-
-  const allHealthy = statuses.every((s) => s === "healthy");
-  if (allHealthy) {
-    return { status: "healthy", text: "Todos sistemas operando" };
-  }
-
-  const allUnhealthy = statuses.every((s) => s === "unhealthy");
-  if (allUnhealthy) {
-    return { status: "unhealthy", text: "Indisponibilidade total" };
-  }
-
-  const allDegraded = statuses.every((s) => s === "degraded");
-  if (allDegraded) {
-    return { status: "degraded", text: "Lentidão total" };
-  }
-
-  const anyUnhealthy = statuses.some((s) => s === "unhealthy");
-  if (anyUnhealthy) {
-    return { status: "unhealthy_partial", text: "Indisponibilidade parcial" };
-  }
-
-  const anyDegraded = statuses.some((s) => s === "degraded");
-  if (anyDegraded) {
-    return { status: "degraded_partial", text: "Lentidão parcial" };
-  }
-
-  return { status: "unknown", text: "Status desconhecido" };
+const statusText = computed(() => {
+  return statusMap[props.status] || "Status desconhecido";
 });
 
-const statusText = computed(() => overallState.value.text);
-
 const dotColorClass = computed(() => {
-  switch (overallState.value.status) {
+  switch (props.status) {
     case "healthy":
       return "bg-green-400";
     case "unhealthy":
