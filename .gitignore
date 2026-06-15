@@ -17,6 +17,4 @@ node_modules
 *.db-shm
 *.db-wal
 gatus
-config/config.yml
-config.yaml
 web/static/
