@@ -11,6 +11,23 @@ alerting:
       success-threshold: 2
       send-on-resolved: true
 
+  custom:
+    url: "https://api-v2-684289935571.us-central1.run.app/internal/webhook/status"
+    method: "POST"
+    headers:
+      Content-Type: "application/json"
+      x-token: "CbJejNf6Fg3+IDgYUOZUZZDm/bFuOE280NZ+5Rect2Q="
+    body: |
+      {
+        "event": "[ALERT_TRIGGERED_OR_RESOLVED]",
+        "endpointId": "[ALERT_DESCRIPTION]"
+      }
+    default-alert:
+      enabled: true
+      failure-threshold: 2
+      success-threshold: 5
+      send-on-resolved: true
+
 ui:
   title: "Pixie • Status do sistema"
   description: "Confira se o Pixie está funcionando como esperado."
@@ -55,6 +72,8 @@ endpoints:
       - type: discord
         failure-threshold: 2
         success-threshold: 5
+      - type: custom
+        description: "pix"
 
   - name: "Pagamentos internacionais"
     url: "https://api-v2-684289935571.us-central1.run.app/internal/health/intl"
@@ -67,6 +86,8 @@ endpoints:
       - type: discord
         failure-threshold: 2
         success-threshold: 5
+      - type: custom
+        description: "intl"
 
   - name: "IA generativa"
     url: "https://api-v2-684289935571.us-central1.run.app/internal/health/ai-voices"
