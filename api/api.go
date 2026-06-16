@@ -3,7 +3,6 @@ package api
 import (
 	"io/fs"
 	"net/http"
-	"os"
 
 	"github.com/TwiN/gatus/v5/config"
 	"github.com/TwiN/gatus/v5/config/ui"
@@ -14,7 +13,6 @@ import (
 	fiber "github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"github.com/gofiber/fiber/v2/middleware/compress"
-	"github.com/gofiber/fiber/v2/middleware/cors"
 	fiberfs "github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/middleware/redirect"
@@ -54,12 +52,7 @@ func (a *API) createRouter(cfg *config.Config) *fiber.App {
 		Network:        fiber.NetworkTCP,
 		Immutable:      true, // If not enabled, will cause issues due to fiber's zero allocation. See #1268 and https://docs.gofiber.io/#zero-allocation
 	})
-	if os.Getenv("ENVIRONMENT") == "dev" {
-		app.Use(cors.New(cors.Config{
-			AllowOrigins:     "http://localhost:8081",
-			AllowCredentials: true,
-		}))
-	}
+	app.Use(sameDomainCORSMiddleware())
 	// Middlewares
 	app.Use(recover.New())
 	app.Use(compress.New())
@@ -85,6 +78,7 @@ func (a *API) createRouter(cfg *config.Config) *fiber.App {
 	unprotectedAPIRouter.Get("/v1/endpoints/:key/response-times/:duration/badge.svg", ResponseTimeBadge(cfg))
 	unprotectedAPIRouter.Get("/v1/endpoints/:key/response-times/:duration/chart.svg", ResponseTimeChart)
 	unprotectedAPIRouter.Get("/v1/endpoints/:key/response-times/:duration/history", ResponseTimeHistory)
+	unprotectedAPIRouter.Get("/v1/overall-status", OverallStatus(cfg))
 	// This endpoint requires authz with bearer token, so technically it is protected
 	unprotectedAPIRouter.Post("/v1/endpoints/:key/external", CreateExternalEndpointResult(cfg))
 	// SPA
@@ -132,6 +126,5 @@ func (a *API) createRouter(cfg *config.Config) *fiber.App {
 	protectedAPIRouter.Get("/v1/endpoints/:key/statuses", EndpointStatus(cfg))
 	protectedAPIRouter.Get("/v1/suites/statuses", SuiteStatuses(cfg))
 	protectedAPIRouter.Get("/v1/suites/:key/statuses", SuiteStatus(cfg))
-	protectedAPIRouter.Get("/v1/overall-status", OverallStatus(cfg))
 	return app
 }
