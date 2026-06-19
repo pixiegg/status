@@ -25,7 +25,7 @@ alerting:
     default-alert:
       enabled: true
       failure-threshold: 2
-      success-threshold: 5
+      success-threshold: 1
       send-on-resolved: true
 
 ui:
@@ -67,7 +67,7 @@ endpoints:
     headers:
       x-token: "CbJejNf6Fg3+IDgYUOZUZZDm/bFuOE280NZ+5Rect2Q="
     <<: *public_settings
-    interval: 5m
+    interval: 3m
     alerts:
       - type: discord
         failure-threshold: 2
