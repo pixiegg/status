@@ -38,7 +38,7 @@ const props = defineProps({
 const statusMap = {
   healthy: "Todos sistemas operando",
   unhealthy: "Indisponibilidade total",
-  degraded: "Lentidão total",
+  degraded: "Sistema com degradação",
   unhealthy_partial: "Indisponibilidade parcial",
   degraded_partial: "Lentidão parcial",
 };
@@ -52,8 +52,8 @@ const dotColorClass = computed(() => {
     case "healthy":
       return "bg-green-400";
     case "unhealthy":
-    case "degraded":
       return "bg-red-400";
+    case "degraded":
     case "unhealthy_partial":
     case "degraded_partial":
       return "bg-yellow-400";

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TwiN/gatus/v5/config"
+	"github.com/TwiN/gatus/v5/config/announcement"
 	"github.com/TwiN/gatus/v5/config/endpoint"
 	"github.com/TwiN/gatus/v5/storage/store"
 	"github.com/TwiN/gatus/v5/storage/store/common/paging"
@@ -26,12 +27,38 @@ func OverallStatus(cfg *config.Config) fiber.Handler {
 				return c.Status(500).SendString(err.Error())
 			}
 			overall = computeOverallStatus(endpointStatuses)
+			if announcementStatus := getAnnouncementOverallStatus(cfg.Announcements); announcementStatus != "" {
+				overall = announcementStatus
+			}
 			cache.SetWithTTL("overall-status", overall, cacheTTL)
 		} else {
 			overall = fmt.Sprint(value)
 		}
 		return c.Status(200).JSON(overallStatusResponse{OverallStatus: overall})
 	}
+}
+
+func getAnnouncementOverallStatus(announcements []*announcement.Announcement) string {
+	var severity int
+	var status string
+	for _, a := range announcements {
+		if a.Archived {
+			continue
+		}
+		switch a.Type {
+		case announcement.TypeOutage:
+			if severity < 2 {
+				severity = 2
+				status = "unhealthy"
+			}
+		case announcement.TypeWarning:
+			if severity < 1 {
+				severity = 1
+				status = "degraded"
+			}
+		}
+	}
+	return status
 }
 
 func getEndpointStatus(ep *endpoint.Status) string {
