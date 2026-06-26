@@ -57,6 +57,10 @@ announcements:
   - timestamp: 2026-06-26T17:17:00Z
     type: outage
     message: "PIX temporariamente indisponível devido a um erro do Banco do Brasil. Estamos acompanhando a situação e iremos atualizar o status assim que o problema for resolvido."
+    archived: true
+  - timestamp: 2026-06-26T21:11:00Z
+    type: operational
+    message: "O Banco do Brasil solucionou o problema e o PIX está operando normalmente."
 
 storage:
   type: postgres
