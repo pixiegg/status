@@ -53,6 +53,11 @@ ui:
   conditions:
     - "[STATUS] < 400"
 
+announcements:
+  - timestamp: 2026-06-26T17:17:00Z
+    type: outage
+    message: "PIX temporariamente indisponível devido a um erro do Banco do Brasil. Estamos acompanhando a situação e iremos atualizar o status assim que o problema for resolvido."
+
 storage:
   type: postgres
   path: "${DATABASE_URL}"
