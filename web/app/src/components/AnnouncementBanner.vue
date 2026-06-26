@@ -28,7 +28,7 @@
             <h2
               class="text-base font-semibold text-gray-900 dark:text-gray-100"
             >
-              Anúncios
+              Incidentes
             </h2>
             <span class="text-xs text-gray-500 dark:text-gray-400">
               ({{ announcements.length }})

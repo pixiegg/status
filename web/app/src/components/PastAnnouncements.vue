@@ -1,7 +1,7 @@
 <template>
   <div v-if="announcements && announcements.length" class="past-announcements">
     <h2 class="text-2xl font-semibold text-foreground mb-6">
-      Anúncios Anteriores
+      Incidentes Anteriores
     </h2>
 
     <div class="space-y-8">
@@ -70,7 +70,7 @@
           <ChevronDown
             class="w-4 h-4 group-hover:translate-y-0.5 transition-transform duration-200"
           />
-          <span class="group-hover:underline">Ver anúncios mais antigos</span>
+          <span class="group-hover:underline">Ver incidentes mais antigos</span>
         </button>
       </div>
     </div>
